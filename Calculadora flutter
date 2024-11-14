@@ -1,0 +1,72 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: CalculadoraSimple(),
+    );
+  }
+}
+
+class CalculadoraSimple extends StatefulWidget {
+  const CalculadoraSimple({super.key});
+
+  @override
+  State<CalculadoraSimple> createState() => _CalculadoraSimpleState();
+}
+
+class _CalculadoraSimpleState extends State<CalculadoraSimple> {
+  final TextEditingController _num1Controller = TextEditingController();
+  final TextEditingController _num2Controller = TextEditingController();
+  int resultado = 0;
+
+  void _sumar() {
+    setState(() {
+      resultado = (int.tryParse(_num1Controller.text) ?? 0) +
+          (int.tryParse(_num2Controller.text) ?? 0);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Calculadora Simple'),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            TextField(
+              controller: _num1Controller,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(labelText: 'Primer número'),
+            ),
+            TextField(
+              controller: _num2Controller,
+              keyboardType: TextInputType.number,
+              decoration: const InputDecoration(labelText: 'Segundo número'),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _sumar,
+              child: const Text('Sumar'),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              'Resultado: $resultado',
+              style: const TextStyle(fontSize: 24),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
